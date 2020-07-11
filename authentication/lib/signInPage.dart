@@ -1,21 +1,24 @@
 import 'package:authentication/emailPage.dart';
 import 'package:authentication/services/auth.dart';
+import 'package:authentication/services/auth_provider.dart';
 
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
-  final AuthBase auth;
-  SignInPage({@required this.auth});
+  //final AuthBase auth;
+  //SignInPage({@required this.auth});
   
-  Future<void> signInAnnonymously() async {
+  Future<void> signInAnnonymously(BuildContext context) async {
     try {
+      final auth=AuthProvider.of(context);
       await auth.signInAnonymously();
     } catch (e) {
       print(e);
     }
   }
-  Future<void> _signInWithGoogle() async {
+  Future<void> _signInWithGoogle(BuildContext context) async {
     try {
+        final auth=AuthProvider.of(context);
       await auth.signInWithGoogle();
     } catch (e) {
       print(e);
@@ -23,10 +26,11 @@ class SignInPage extends StatelessWidget {
   }
   void _signInWithEmail(BuildContext context)
   {
+      
     Navigator.of(context).push(
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => EmailPage(auth: auth,),
+        builder: (context) => EmailPage(),//auth: auth,),
       )
     );
   }
@@ -44,7 +48,7 @@ class SignInPage extends StatelessWidget {
             CustomButton(
               title: 'google',
               colour: Colors.red,
-              ontap: _signInWithGoogle,
+              ontap: ()=>_signInWithGoogle(context),
             ),
             CustomButton(
               title: 'Facebook',
@@ -61,7 +65,7 @@ class SignInPage extends StatelessWidget {
             CustomButton(
               title: 'Anonyamous',
               colour: Colors.white,
-              ontap: signInAnnonymously,
+              ontap: ()=>signInAnnonymously(context),
             )
           ],
         ),

@@ -1,13 +1,14 @@
 import 'package:authentication/platform_alert_dialog.dart';
 import 'package:authentication/services/auth.dart';
+import 'package:authentication/services/auth_provider.dart';
 import 'package:authentication/stringValidator.dart';
 import 'package:flutter/material.dart';
 
 enum emailFormType { SignIn, Register }
 
 class EmailForm extends StatefulWidget with EmailandPasswordValidator {
-  EmailForm({@required this.auth});
-  final AuthBase auth;
+ // EmailForm({@required this.auth});
+ // final AuthBase auth;
   @override
   _EmailFormState createState() => _EmailFormState();
 }
@@ -28,10 +29,11 @@ class _EmailFormState extends State<EmailForm> {
       _submitted = true;
     });
     try {
+      final auth=AuthProvider.of(context);
       if (_formType == emailFormType.SignIn) {
-        await widget.auth.signInWithEmail(_email, _password);
+        await auth.signInWithEmail(_email, _password);
       } else {
-        await widget.auth.createUserWithEmail(_email, _password);
+        await auth.createUserWithEmail(_email, _password);
       }
       Navigator.of(context).pop();
     } catch (e) {

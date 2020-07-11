@@ -1,10 +1,11 @@
 import 'package:authentication/platform_alert_dialog.dart';
+import 'package:authentication/services/auth_provider.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({@required this.auth});
+ // HomePage({@required this.auth});
 
-  final auth;
+ // final auth;
   Future<void> _confirmSignOut(BuildContext context) async {
     final didRequestSignOut = await PlatformAlertDialog(
             title: 'Logout',
@@ -13,11 +14,12 @@ class HomePage extends StatelessWidget {
             defaultActionText: 'Logout')
         .show(context);
     print(didRequestSignOut);
-    if (didRequestSignOut == true) _signOut();
+    if (didRequestSignOut == true) _signOut(context);
   }
 
-  Future<void> _signOut() async {
+  Future<void> _signOut(BuildContext context) async {
     try {
+      final auth=AuthProvider.of(context);
       print('signing out');
       await auth.signOut();
     } catch (e) {
