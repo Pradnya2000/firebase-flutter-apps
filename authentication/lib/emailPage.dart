@@ -1,4 +1,5 @@
-import 'package:authentication/emailForm.dart';
+import 'package:authentication/emailFormStateful.dart';
+import 'package:authentication/email_sign_in_form_bloc_based.dart';
 import 'package:authentication/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class EmailPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
-          child:EmailForm(),//auth: auth,),
+          child:EmailFormBlocBased.create(context),//auth: auth,),
         ),
       ),
     backgroundColor: Colors.grey,
